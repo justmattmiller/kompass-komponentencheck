@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<!-- saved from url=(0121)file:///Users/mattpmiller/Documents/Codex/2026-08-18/referenced-chatgpt-conversation-this-is-an/outputs/csv-vorschau.html -->
+<html lang="de"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSV-Vorschau</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --text: #172033;
+      --muted: #60708a;
+      --line: #d9e1ec;
+      --accent: #2357d9;
+      --accent-soft: #eaf0ff;
+      --success: #176b45;
+      --success-soft: #eaf7f0;
+      --danger: #a12b2b;
+      --danger-soft: #fff0f0;
+      --shadow: 0 18px 50px rgba(23, 32, 51, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    header { margin-bottom: 26px; }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .intro {
+      max-width: 700px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .drop-zone {
+      display: grid;
+      place-items: center;
+      min-height: 230px;
+      padding: 32px;
+      border: 2px dashed #aebbd0;
+      border-radius: 14px;
+      margin: 22px;
+      text-align: center;
+      transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+    }
+
+    .drop-zone.is-dragging {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: scale(1.005);
+    }
+
+    .drop-zone:focus-visible {
+      outline: 3px solid rgba(35, 87, 217, 0.3);
+      outline-offset: 3px;
+    }
+
+    .drop-icon {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      margin: 0 auto 16px;
+      border-radius: 15px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.6rem;
+      font-weight: 750;
+    }
+
+    .drop-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 720;
+    }
+
+    .drop-help {
+      margin: 6px 0 18px;
+      color: var(--muted);
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 17px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--accent);
+      color: white;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .button:hover { background: #1948be; }
+
+    .button:focus-visible {
+      outline: 3px solid rgba(35, 87, 217, 0.3);
+      outline-offset: 3px;
+    }
+
+    input[type="file"] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      clip-path: inset(50%);
+    }
+
+    .privacy {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin: 0 22px 22px;
+      padding: 13px 15px;
+      border-radius: 10px;
+      background: var(--success-soft);
+      color: var(--success);
+      font-size: 0.94rem;
+    }
+
+    .privacy strong { white-space: nowrap; }
+
+    .message {
+      margin-top: 20px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .message.error {
+      border-color: #efc7c7;
+      background: var(--danger-soft);
+      color: var(--danger);
+    }
+
+    .results { margin-top: 24px; }
+
+    .results-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .file-name {
+      margin: 0 0 3px;
+      font-size: 1.25rem;
+      overflow-wrap: anywhere;
+    }
+
+    .file-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0;
+    }
+
+    .stat {
+      min-width: 120px;
+      padding: 12px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .stat dt {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .stat dd {
+      margin: 1px 0 0;
+      font-size: 1.55rem;
+      font-weight: 780;
+    }
+
+    .sort-rule {
+      margin: 0 0 12px;
+      padding: 11px 14px;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      background: var(--accent-soft);
+      color: #29436f;
+      font-size: 0.92rem;
+    }
+
+    .table-card {
+      overflow: auto;
+      max-height: 62vh;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      white-space: nowrap;
+    }
+
+    th, td {
+      max-width: 360px;
+      padding: 11px 14px;
+      overflow: hidden;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      text-overflow: ellipsis;
+    }
+
+    th:last-child, td:last-child { border-right: 0; }
+    tbody tr:last-child td { border-bottom: 0; }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #edf2f8;
+      color: #344158;
+      font-weight: 750;
+    }
+
+    tbody tr:nth-child(even) { background: #f8fafd; }
+
+    td.status-match,
+    td.status-difference {
+      font-weight: 750;
+    }
+
+    td.status-match {
+      background: #ccebd9;
+      color: #0f5d39;
+    }
+
+    td.status-difference {
+      background: #f7cccc;
+      color: #8d2020;
+    }
+
+    td.age-old {
+      background: #ffe0ad;
+      color: #7a4300;
+      font-weight: 750;
+    }
+
+    .known-limits {
+      margin-top: 36px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .known-limits h2 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+    }
+
+    .known-limits p {
+      max-width: 900px;
+      margin: 0 0 13px;
+      color: #46546a;
+    }
+
+    .known-limits p:last-child { margin-bottom: 0; }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 620px) {
+      main { padding-top: 32px; }
+      .drop-zone { min-height: 210px; margin: 14px; padding: 24px 16px; }
+      .privacy { margin: 0 14px 14px; }
+      .privacy strong { white-space: normal; }
+      .stats { width: 100%; }
+      .stat { flex: 1; min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>CSV-Vorschau</h1>
+      <p class="intro">Prüfen Sie Aufbau und Inhalt Ihrer Design-System-Prüfdaten, bevor Sie mit der Auswertung beginnen.</p>
+    </header>
+
+    <section class="card" aria-labelledby="upload-heading">
+      <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-describedby="upload-help">
+        <div>
+          <div class="drop-icon" aria-hidden="true">↓</div>
+          <p class="drop-title" id="upload-heading">CSV-Datei hier ablegen</p>
+          <p class="drop-help" id="upload-help">oder eine Datei von Ihrem Gerät auswählen</p>
+          <label class="button" for="fileInput">Datei auswählen</label>
+          <input id="fileInput" type="file" accept=".csv,text/csv" aria-label="CSV-Datei auswählen">
+        </div>
+      </div>
+      <p class="privacy"><strong>🔒 Bleibt auf Ihrem Gerät.</strong> Die Datei wird ausschließlich in diesem Browser verarbeitet und nirgendwohin hochgeladen.</p>
+    </section>
+
+    <div class="message" id="message" role="status">Noch keine Datei ausgewählt. Ziehen Sie eine CSV-Datei in das Feld oder öffnen Sie die Dateiauswahl.</div>
+
+    <section class="results" id="results" aria-labelledby="preview-heading" hidden="">
+      <div class="results-header">
+        <div>
+          <h2 class="file-name" id="preview-heading"></h2>
+          <p class="file-note" id="previewNote"></p>
+        </div>
+        <dl class="stats">
+          <div class="stat">
+            <dt>Zeilen insgesamt</dt>
+            <dd id="rowCount">0</dd>
+          </div>
+          <div class="stat">
+            <dt>Spalten</dt>
+            <dd id="columnCount">0</dd>
+          </div>
+          <div class="stat">
+            <dt>Übereinstimmungen</dt>
+            <dd id="matchCount">0</dd>
+          </div>
+          <div class="stat">
+            <dt>Abweichungen</dt>
+            <dd id="differenceCount">0</dd>
+          </div>
+          <div class="stat">
+            <dt>Kandidaten für neue Variante</dt>
+            <dd id="newVariantCount">0</dd>
+          </div>
+          <div class="stat">
+            <dt>Prüfung erforderlich</dt>
+            <dd id="reviewCount">0</dd>
+          </div>
+        </dl>
+      </div>
+
+      <p class="sort-rule"><strong>Priorität:</strong> Abweichungen zuerst, nach Nutzungshäufigkeit absteigend. Übereinstimmungen folgen in ursprünglicher Reihenfolge.</p>
+      <p class="sort-rule"><strong>Alterung:</strong> Als auffällig alt gilt eine Differenz von mehr als 180 Tagen zum aktuellsten Datum.</p>
+
+      <div class="table-card" tabindex="0" aria-label="CSV-Vorschautabelle">
+        <table>
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="known-limits" aria-labelledby="known-limits-heading">
+      <h2 id="known-limits-heading">Bekannte Grenzen</h2>
+      <p>Getestet mit leeren Feldern, Sonderzeichen und langen Texten. Ein fehlendes Datum in Zuletzt_geändert wird als "Datum fehlt" angezeigt statt das Werkzeug abstürzen zu lassen.</p>
+      <p>Der Fehlerfall: Zeile INST-010 gilt laut Werkzeug als sauber, Erwartet und Tatsächlich stimmen überein. Erst die Alterungs-Stufe zeigt, dass die Komponente seit Januar 2023 nicht mehr geändert und kaum genutzt wird. Das Werkzeug kann daraus nicht ableiten, ob das eine stabile, bewährte Komponente ist oder eine tote, die niemand mehr braucht. Beides sieht in den Daten gleich aus.</p>
+      <p>Außerdem: Die Einordnung in "Kandidat für neue Variante" oder "Prüfung erforderlich" hängt allein davon ab, ob das Feld Begründung ausgefüllt ist. Ein leeres Feld heißt nicht, dass keine gültige Begründung existiert, nur dass niemand sie eingetragen hat.</p>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const fileInput = document.getElementById("fileInput");
+    const dropZone = document.getElementById("dropZone");
+    const message = document.getElementById("message");
+    const results = document.getElementById("results");
+    const previewHeading = document.getElementById("preview-heading");
+    const previewNote = document.getElementById("previewNote");
+    const rowCount = document.getElementById("rowCount");
+    const columnCount = document.getElementById("columnCount");
+    const matchCount = document.getElementById("matchCount");
+    const differenceCount = document.getElementById("differenceCount");
+    const newVariantCount = document.getElementById("newVariantCount");
+    const reviewCount = document.getElementById("reviewCount");
+    const tableHead = document.getElementById("tableHead");
+    const tableBody = document.getElementById("tableBody");
+
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length) loadFile(fileInput.files[0]);
+    });
+
+    dropZone.addEventListener("click", (event) => {
+      if (event.target !== fileInput && event.target.tagName !== "LABEL") fileInput.click();
+    });
+
+    dropZone.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        fileInput.click();
+      }
+    });
+
+    ["dragenter", "dragover"].forEach((type) => {
+      dropZone.addEventListener(type, (event) => {
+        event.preventDefault();
+        dropZone.classList.add("is-dragging");
+      });
+    });
+
+    ["dragleave", "drop"].forEach((type) => {
+      dropZone.addEventListener(type, (event) => {
+        event.preventDefault();
+        dropZone.classList.remove("is-dragging");
+      });
+    });
+
+    dropZone.addEventListener("drop", (event) => {
+      const file = event.dataTransfer.files[0];
+      if (file) loadFile(file);
+    });
+
+    async function loadFile(file) {
+      setMessage("Datei wird eingelesen …");
+      results.hidden = true;
+
+      try {
+        const buffer = await file.arrayBuffer();
+        let text = new TextDecoder("utf-8", { fatal: false }).decode(buffer);
+
+        if (text.includes("\uFFFD")) {
+          text = new TextDecoder("windows-1252").decode(buffer);
+        }
+
+        const rows = parseCsv(text.replace(/^\uFEFF/, ""));
+
+        if (!rows.length || (rows.length === 1 && rows[0].every((cell) => cell.trim() === ""))) {
+          throw new Error("Die Datei enthält keine CSV-Daten.");
+        }
+
+        renderPreview(file.name, rows);
+      } catch (error) {
+        setMessage(error.message || "Die Datei konnte nicht gelesen werden.", true);
+      }
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let field = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+
+        if (char === '"') {
+          if (inQuotes && text[i + 1] === '"') {
+            field += '"';
+            i += 1;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === ";" && !inQuotes) {
+          row.push(field);
+          field = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          row.push(field);
+          rows.push(row);
+          row = [];
+          field = "";
+          if (char === "\r" && text[i + 1] === "\n") i += 1;
+        } else {
+          field += char;
+        }
+      }
+
+      if (inQuotes) throw new Error("Die CSV-Datei enthält ein nicht geschlossenes Anführungszeichen.");
+      if (field !== "" || row.length > 0) {
+        row.push(field);
+        rows.push(row);
+      }
+
+      while (rows.length && rows[rows.length - 1].every((cell) => cell === "")) rows.pop();
+      return rows;
+    }
+
+    function renderPreview(fileName, rows) {
+      const headers = rows[0];
+      const dataRows = rows.slice(1);
+      const expectedIndex = headers.findIndex((header) => header.trim() === "Erwartet");
+      const actualIndex = headers.findIndex((header) => header.trim() === "Tatsächlich");
+      const usageIndex = headers.findIndex((header) => header.trim() === "Nutzungshäufigkeit");
+      const reasonIndex = headers.findIndex((header) => header.trim() === "Begründung");
+      const lastChangedIndex = headers.findIndex((header) => header.trim() === "Zuletzt_geändert");
+
+      if (expectedIndex === -1 || actualIndex === -1) {
+        throw new Error('Die CSV-Datei muss die Spalten „Erwartet“ und „Tatsächlich“ enthalten.');
+      }
+
+      if (usageIndex === -1) {
+        throw new Error('Die CSV-Datei muss die Spalte „Nutzungshäufigkeit“ enthalten.');
+      }
+
+      if (reasonIndex === -1) {
+        throw new Error('Die CSV-Datei muss die Spalte „Begründung“ enthalten.');
+      }
+
+      if (lastChangedIndex === -1) {
+        throw new Error('Die CSV-Datei muss die Spalte „Zuletzt_geändert“ enthalten.');
+      }
+
+      const parsedDates = dataRows.map((dataRow) => parseCsvDate(dataRow[lastChangedIndex]));
+      const validDates = parsedDates.filter(Number.isFinite);
+      const latestDate = validDates.length ? Math.max(...validDates) : null;
+
+      const evaluatedRows = dataRows.map((dataRow, originalIndex) => {
+        const rawDate = String(dataRow[lastChangedIndex] ?? "").trim();
+        const parsedDate = parsedDates[originalIndex];
+        const ageInDays = Number.isFinite(parsedDate) && latestDate !== null
+          ? Math.round((latestDate - parsedDate) / 86400000)
+          : null;
+
+        return {
+          dataRow,
+          originalIndex,
+          isMatch: (dataRow[expectedIndex] ?? "") === (dataRow[actualIndex] ?? ""),
+          hasReason: String(dataRow[reasonIndex] ?? "").trim() !== "",
+          usage: parseGermanNumber(dataRow[usageIndex]),
+          aging: rawDate === "" ? "Datum fehlt" : ageInDays > 180 ? "auffällig alt" : ""
+        };
+      });
+
+      const deviations = evaluatedRows
+        .filter((row) => !row.isMatch)
+        .sort((left, right) => right.usage - left.usage || left.originalIndex - right.originalIndex);
+      const matchingRows = evaluatedRows.filter((row) => row.isMatch);
+      const previewRows = deviations.concat(matchingRows).slice(0, 20);
+
+      const matches = matchingRows.length;
+      const differences = dataRows.length - matches;
+      const newVariants = deviations.filter((row) => row.hasReason).length;
+      const reviews = deviations.length - newVariants;
+
+      previewHeading.textContent = fileName;
+      previewNote.textContent = dataRows.length > 20
+        ? "Vorschau der ersten 20 Datenzeilen"
+        : "Vorschau aller Datenzeilen";
+      rowCount.textContent = formatNumber(dataRows.length);
+      columnCount.textContent = formatNumber(headers.length);
+      matchCount.textContent = formatNumber(matches);
+      differenceCount.textContent = formatNumber(differences);
+      newVariantCount.textContent = formatNumber(newVariants);
+      reviewCount.textContent = formatNumber(reviews);
+
+      tableHead.replaceChildren();
+      tableBody.replaceChildren();
+
+      const headingRow = document.createElement("tr");
+      headers.forEach((header, index) => {
+        const th = document.createElement("th");
+        th.scope = "col";
+        th.textContent = header || `Spalte ${index + 1}`;
+        th.title = th.textContent;
+        headingRow.appendChild(th);
+      });
+      const statusHeading = document.createElement("th");
+      statusHeading.scope = "col";
+      statusHeading.textContent = "Status";
+      headingRow.appendChild(statusHeading);
+      const classificationHeading = document.createElement("th");
+      classificationHeading.scope = "col";
+      classificationHeading.textContent = "Einordnung";
+      headingRow.appendChild(classificationHeading);
+      const agingHeading = document.createElement("th");
+      agingHeading.scope = "col";
+      agingHeading.textContent = "Alterung";
+      headingRow.appendChild(agingHeading);
+      tableHead.appendChild(headingRow);
+
+      previewRows.forEach(({ dataRow, isMatch, hasReason, aging }) => {
+        const tr = document.createElement("tr");
+        for (let index = 0; index < headers.length; index += 1) {
+          const td = document.createElement("td");
+          td.textContent = dataRow[index] ?? "";
+          td.title = td.textContent;
+          tr.appendChild(td);
+        }
+
+        const statusCell = document.createElement("td");
+        statusCell.textContent = isMatch ? "Übereinstimmung" : "Abweichung";
+        statusCell.className = isMatch ? "status-match" : "status-difference";
+        tr.appendChild(statusCell);
+
+        const classificationCell = document.createElement("td");
+        classificationCell.textContent = isMatch
+          ? ""
+          : hasReason
+            ? "Kandidat für neue Variante"
+            : "Prüfung erforderlich";
+        tr.appendChild(classificationCell);
+
+        const agingCell = document.createElement("td");
+        agingCell.textContent = aging;
+        if (aging === "auffällig alt") agingCell.className = "age-old";
+        tr.appendChild(agingCell);
+        tableBody.appendChild(tr);
+      });
+
+      if (!dataRows.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = Math.max(headers.length + 3, 1);
+        td.textContent = "Die Datei enthält eine Kopfzeile, aber keine Datenzeilen.";
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+      }
+
+      message.hidden = true;
+      results.hidden = false;
+    }
+
+    function setMessage(text, isError = false) {
+      message.textContent = text;
+      message.classList.toggle("error", isError);
+      message.hidden = false;
+    }
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("de-DE").format(value);
+    }
+
+    function parseGermanNumber(value) {
+      const normalized = String(value ?? "")
+        .trim()
+        .replace(/[.\s\u00A0]/g, "")
+        .replace(",", ".");
+      const number = Number(normalized);
+      return normalized !== "" && Number.isFinite(number) ? number : Number.NEGATIVE_INFINITY;
+    }
+
+    function parseCsvDate(value) {
+      const text = String(value ?? "").trim();
+      let match = text.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})(?:\D.*)?$/);
+      let day;
+      let month;
+      let year;
+
+      if (match) {
+        [, day, month, year] = match.map(Number);
+      } else {
+        match = text.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:\D.*)?$/);
+        if (!match) return null;
+        year = Number(match[1]);
+        month = Number(match[2]);
+        day = Number(match[3]);
+      }
+
+      const timestamp = Date.UTC(year, month - 1, day);
+      const date = new Date(timestamp);
+      return date.getUTCFullYear() === year &&
+        date.getUTCMonth() === month - 1 &&
+        date.getUTCDate() === day
+        ? timestamp
+        : null;
+    }
+  </script>
+
+
+</body></html>

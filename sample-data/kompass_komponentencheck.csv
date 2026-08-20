@@ -1,0 +1,19 @@
+Instanz_ID;Marke;Komponente;Erwartet;Tatsächlich;Team;Zuletzt_geändert;Nutzungshäufigkeit;Begründung
+INST-001;Terra Frisch;Primär-Button;Kompass-Blau-500;Kompass-Blau-500;Team Bestellung;03.08.2026;42,5;
+INST-002;Terra Frisch;Eingabefeld;Radius 8px;Radius 8px;Team Konto;28.07.2026;15,2;
+INST-003;Terra Wohnen;Karte;Schatten-Ebene-2;Schatten-Ebene-2;Team Katalog;10.06.2026;9,8;
+INST-004;Terra Frisch;Primär-Button;Kompass-Blau-500;#1A73E8;Team Rezepte;30.07.2026;38,1;
+INST-005;Terra Kids;Badge;Kompass-Gelb-300;Kompass-Gelb-500;Team Spielwelt;15.05.2026;5,4;
+INST-006;Terra Wohnen;Datumsauswahl;Format TT.MM.JJJJ;Format MM/TT/JJJJ;Team Katalog;22.07.2026;3,0;US-Format für internationalen Rollout freigegeben, Produkt-Review vom 14.07.2026
+INST-007;Terra Frisch;Fehlermeldung;Rot-500, Icon links;Rot-500, Icon rechts;Team Kasse;01.08.2026;27,6;Vorbereitung auf arabische Sprachversion (RTL), mit UX-Lead abgestimmt
+INST-008;Terra Frisch;Primär-Button;Kompass-Blau-500;Kompass-Blau-500 mit Schatten;Team Kasse;05.08.2026;91,3;
+INST-009;Terra Wohnen;Tabelle;Zeilenhöhe 48px;Zeilenhöhe 40px;Team Katalog;19.03.2026;61,0;
+INST-010;Terra Kids;Ladeindikator;Kompass-Spinner-Standard;Kompass-Spinner-Standard;Team Spielwelt;11.01.2023;0,1;
+INST-011;Terra Frisch;Tooltip;Kompass-Grau-700;Kompass-Grau-700;Team Bestellung;19.02.2026;18,4;
+INST-012;Terra Wohnen;Akkordeon;Einklapp-Icon: Pfeil;Einklapp-Icon: Plus/Minus;Team Katalog;;7,2;Barrierefreiheits-Test zeigte höhere Erkennbarkeit bei Plus/Minus
+INST-013;Terra Kids;Karte;Kompass-Radius-M;Kompass-Radius-M;Team Spielwelt;08.08.2026;33,9;
+INST-014;Terra Frisch;Eingabefeld;Kompass-Rand-Grau-300;Kompass-Rand-Rot-500 bei Fehler;Team Konto;12.07.2026;22,0;Rand rot bei Validierungsfehler, seit Q2 Standard in allen Formularen, siehe Styleguide-Anhang Formulare 2026, Abschnitt 4.2, abgestimmt mit dem Design-System-Team am 03.04.2026
+INST-015;Terra Wohnen;Badge;Kompass-Grün-500;Kompass-Grün-500;Team Katalog;25.07.2026;14,7;
+INST-016;Terra Frisch;Primär-Button;Kompass-Blau-500;Kompass-Blau-600;Team Rezepte;30.06.2026;2,3;
+INST-017;Terra Kids;Fehlermeldung;Rot-500;Orange-500;Team Spielwelt;04.08.2026;44,8;
+INST-018;Terra Wohnen;Tooltip;Kompass-Grau-700;Kompass-Grau-800;Team Katalog;16.06.2026;6,1;Test für Dunkelmodus, siehe Ticket TW-4471
