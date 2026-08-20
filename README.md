@@ -25,6 +25,14 @@ umgesetzten Wert.
 5. Alterung: Differenz von mehr als 180 Tagen zum aktuellsten Datum in
    `Zuletzt_geändert` gilt als **auffällig alt**
 
+Der erwartete Wert (`Erwartet`) wird je Zeile ausgewertet, also pro
+Marke und Komponenten-Instanz — nicht als ein einziger globaler Wert pro
+`Komponente`. Dieselbe Komponente darf bei unterschiedlichen Marken
+unterschiedliche, jeweils gültige Vorgaben haben (z. B. Primär-Button bei
+Terra Frisch in Kompass-Blau, bei Terra Kids in Kompass-Gelb) — das ist
+kein Abweichungsfall, solange `Tatsächlich` der markeneigenen Vorgabe
+entspricht.
+
 Alle angewendeten Regeln (Sortierung, Alterungsschwelle) werden direkt auf
 der Seite offengelegt — nicht versteckt in einer Konfigurationsdatei.
 
@@ -71,9 +79,6 @@ Semikolon-getrennt, UTF-8, mit folgenden Spalten:
   leeres Feld heißt nicht zwingend, dass keine gültige Begründung
   existiert — nur, dass niemand sie eingetragen hat. Eine lokale, regelbasierte
   Qualitätsheuristik ist als nächster Schritt geplant.
-- **Ein globaler Erwartet-Wert pro Komponente**, noch keine
-  markenspezifische Differenzierung (z. B. wenn Terra Kids legitim von der
-  Kompass-Standardvorgabe abweicht).
 
 ## Status
 
